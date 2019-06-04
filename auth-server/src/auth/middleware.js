@@ -32,7 +32,10 @@ module.exports = (req, res, next) => {
   }
 
   function _authenticate(user) {
-    if ( user ) {
+    if ( !user ) {
+      return _authError();
+      req.user = user;
+      req.token = user.generateToken();
       next();
     }
     else {
